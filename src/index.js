@@ -25,6 +25,11 @@ const buttonAddNewCard = document.querySelector(".profile__add-button");
 const popupEditProfile = document.querySelector(".popup_type_edit");
 const popupAddNewCard = document.querySelector(".popup_type_new-card");
 const buttonsClosePopup = document.querySelectorAll(".popup__close");
+const popupImage = document.querySelector(".popup_type_image");
+const popupEditName = popupEditProfile.querySelector(".popup__input_type_name");
+const popupEditDescription = popupEditProfile.querySelector(
+  ".popup__input_type_description"
+);
 export const popups = document.querySelectorAll(".popup");
 
 function handleFormSubmitEditProfile(evt) {
@@ -33,6 +38,20 @@ function handleFormSubmitEditProfile(evt) {
   profileDescription.textContent = formElementEditProfile.description.value;
   closePopup();
 }
+function handleDeleteCard(evt) {
+  evt.target.closest(".card").remove();
+}
+function handelAddLike(evt) {
+  evt.target.classList.toggle("card__like-button_is-active");
+}
+function handleOpenPopupCard(dataCard) {
+  const imgInPopup = popupImage.querySelector(".popup__image");
+  const popupCaption = popupImage.querySelector(".popup__caption");
+  imgInPopup.src = dataCard.link;
+  imgInPopup.alt = dataCard.name;
+  popupCaption.textContent = dataCard.name;
+  openPopup(popupImage);
+}
 
 function handleFormSubmitAddCard(evt) {
   evt.preventDefault();
@@ -40,13 +59,20 @@ function handleFormSubmitAddCard(evt) {
     name: formElementAddCard["place-name"].value,
     link: formElementAddCard["link"].value,
   };
-  placesList.prepend(createCard(dataCard));
+  placesList.prepend(
+    createCard(dataCard, handelAddLike, handleDeleteCard, handleOpenPopupCard)
+  );
   closePopup();
   formElementAddCard.reset();
 }
 
 function renderCard(dataCard) {
-  const card = createCard(dataCard);
+  const card = createCard(
+    dataCard,
+    handelAddLike,
+    handleDeleteCard,
+    handleOpenPopupCard
+  );
   placesList.append(card);
 }
 
@@ -58,12 +84,6 @@ formElementEditProfile.addEventListener("submit", handleFormSubmitEditProfile);
 formElementAddCard.addEventListener("submit", handleFormSubmitAddCard);
 
 buttonEditProfile.addEventListener("click", function () {
-  const popupEditName = popupEditProfile.querySelector(
-    ".popup__input_type_name"
-  );
-  const popupEditDescription = popupEditProfile.querySelector(
-    ".popup__input_type_description"
-  );
   popupEditName.value = profileTitle.textContent;
   popupEditDescription.value = profileDescription.textContent;
   openPopup(popupEditProfile);
@@ -74,8 +94,13 @@ buttonAddNewCard.addEventListener("click", function () {
 
 buttonsClosePopup.forEach((buttonClosePopup) => {
   buttonClosePopup.addEventListener("click", function () {
-    popups.forEach((popup) => {
+    closePopup();
+  });
+});
+popups.forEach((popup) => {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target === evt.currentTarget) {
       closePopup();
-    });
+    }
   });
 });
