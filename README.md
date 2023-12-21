@@ -1,6 +1,5 @@
 # Проектная работа Mesto
 
-https://github.com/KristinaFokina/mesto-project-ff
+[https://github.com/KristinaFokina/mesto-project-ff](https://kristinafokina.github.io/mesto-project-ff/)
 
-Чтобы сформировать проект необходимо ввести : npm run build
-Чтобы открыть проект необходимо ввести: npm run dev
+
