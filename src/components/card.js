@@ -3,7 +3,7 @@ const сardTemplate = document.querySelector("#card-template").content;
 export default function createCard(
   dataCard,
   addLike,
-  openPopupDeleteCard,
+  deleteCard,
   openPopupCard,
   userId
 ) {
@@ -31,7 +31,7 @@ export default function createCard(
   cardTitle.textContent = dataCard.name;
   cardLikes.textContent = dataCard.likes.length;
 
-  deleteButton.addEventListener("click", openPopupDeleteCard);
+  deleteButton.addEventListener("click", deleteCard);
   likeButton.addEventListener("click", addLike);
   cardImage.addEventListener("click", function () {
     openPopupCard(dataCard);

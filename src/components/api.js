@@ -19,9 +19,7 @@ export const getUserData = () => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 
 export const getInitialCards = () => {
@@ -31,9 +29,7 @@ export const getInitialCards = () => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 export const patchProfileData = (profileName, profileAbout) => {
   return fetch(`${config.baseUrl}users/me`, {
@@ -47,9 +43,7 @@ export const patchProfileData = (profileName, profileAbout) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 
 export const postNewCard = (dataCard) => {
@@ -64,9 +58,7 @@ export const postNewCard = (dataCard) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 
 export const apiDeleteCard = (cardId) => {
@@ -80,9 +72,7 @@ export const apiDeleteCard = (cardId) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 
 export const apiAddLike = (cardId) => {
@@ -93,9 +83,7 @@ export const apiAddLike = (cardId) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 
 export const apiDeleteLike = (cardId) => {
@@ -106,9 +94,7 @@ export const apiDeleteLike = (cardId) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
 export const apiUpdateAvatar = (avatar) => {
   return fetch(`${config.baseUrl}users/me/avatar `, {
@@ -121,7 +107,5 @@ export const apiUpdateAvatar = (avatar) => {
     .then((res) => {
       return getResult(res);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    
 };
