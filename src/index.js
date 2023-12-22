@@ -25,6 +25,10 @@ const whoIsTheGoat = [
   { name: "card_3", link: card_3 },
   { name: "logo", link: logo },
 ];
+let userId = "";
+let userName = "";
+let userAbout = "";
+let userAvatar = "";
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileImage = document.querySelector(".profile__image");
@@ -68,14 +72,15 @@ const validationConfig = {
 
 function initialUserData() {
   Promise.all([getUserData(), getInitialCards()])
-
     .then(([userData, cards]) => {
-      profileTitle.textContent = userData.name;
-      profileDescription.textContent = userData.about;
-      profileImage.setAttribute(
-        "style",
-        `background-image:url(${userData.avatar})`
-      );
+      userId = userData._id;
+      userName = userData.name;
+      userAbout = userData.about;
+      userAvatar = userData.avatar;
+
+      profileTitle.textContent = userName;
+      profileDescription.textContent = userAbout;
+      profileImage.setAttribute("style", `background-image:url(${userAvatar})`);
 
       cards.forEach((card) => {
         renderCard(card);
@@ -161,47 +166,34 @@ function handleFormSubmitAddCard(evt) {
     link: formElementAddCard["link"].value,
     likes: [],
   };
-  getUserData().then((userData) => {
-    dataCard.owner = { _id: userData._id };
-    postNewCard(dataCard)
-      .then((res) => {
-        placesList.prepend(
-          createCard(
-            res,
-            handelAddLike,
-            deleteCard,
-            handleOpenPopupCard,
-            userData._id
-          )
-        );
-        closePopup(popupAddNewCard);
-        formElementAddCard.reset();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        buttonSubmitAddCard.textContent = "Сохранить";
-      });
-  });
-}
 
-function renderCard(dataCard) {
-  getUserData()
-    .then((userData) => {
-      const card = createCard(
-        dataCard,
-        handelAddLike,
-        deleteCard,
-        handleOpenPopupCard,
-        userData._id
+  dataCard.owner = { _id: userId };
+  postNewCard(dataCard)
+    .then((res) => {
+      placesList.prepend(
+        createCard(res, handelAddLike, deleteCard, handleOpenPopupCard, userId)
       );
-
-      placesList.append(card);
+      closePopup(popupAddNewCard);
+      formElementAddCard.reset();
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      buttonSubmitAddCard.textContent = "Сохранить";
     });
+}
+
+function renderCard(dataCard) {
+  const card = createCard(
+    dataCard,
+    handelAddLike,
+    deleteCard,
+    handleOpenPopupCard,
+    userId
+  );
+
+  placesList.append(card);
 }
 
 function handleUpdateAvatar(evt) {

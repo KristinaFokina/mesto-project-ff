@@ -15,7 +15,8 @@ export default function createCard(
   const cardLikes = cardElement.querySelector(".card__likes");
   const deleteButton = cardElement.querySelector(".card__delete-button");
   const likeButton = cardElement.querySelector(".card__like-button");
-
+  console.log(userId);
+  console.log(dataCard.owner._id);
   if (userId !== dataCard.owner._id) {
     deleteButton.remove();
   }
